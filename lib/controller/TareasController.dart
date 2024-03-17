@@ -27,9 +27,25 @@ class TareasController {
     return tareas.length;
   }
 
-  List<Tarea> getTareas() {
-    return tareas;
-  }
+List<Tarea> getTareas() {
+  return [
+    Tarea(
+      nombre: 'Comprar leche',
+      descripcion: 'Ir al supermercado y comprar leche',
+      completada: false,
+    ),
+    Tarea(
+      nombre: 'Hacer ejercicio',
+      descripcion: 'Ir al gimnasio y hacer ejercicio durante una hora',
+      completada: false,
+    ),
+    Tarea(
+      nombre: 'Estudiar para el examen',
+      descripcion: 'Repasar los apuntes y hacer ejercicios prácticos',
+      completada: false,
+    ),
+  ];
+}
 
   int getTareasCompletadas() {
     return tareas.where((tarea) => tarea.completada).length;

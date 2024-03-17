@@ -11,10 +11,18 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false, 
       home: Scaffold(
         appBar: AppBar(
-          title:  Text("tareas"),
-          backgroundColor: Colors.blueAccent,
+          title: Text(
+          "Lista de tareas",
+          style: TextStyle(
+            fontWeight: FontWeight.bold, 
+            color: Colors.white, 
+          ),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.deepPurple,
         ),
         body: Inicio(),
       ),

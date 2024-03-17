@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tarea2_movil/controller/TareasController.dart';
 
-import 'package:tarea2_movil/models/tareas.dart'; 
+import 'package:tarea2_movil/models/tareas.dart';
+import 'package:tarea2_movil/views/pages/AgregarTarea.dart'; 
 
 class Inicio extends StatelessWidget {
   final TareasController _tareasController = TareasController(); 
@@ -37,6 +38,10 @@ class Inicio extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AgregarTareaPage()),
+          );
         },
         child: Icon(Icons.add),
       ),
