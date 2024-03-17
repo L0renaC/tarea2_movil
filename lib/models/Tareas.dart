@@ -1,6 +1,7 @@
 class Tarea {
   String nombre;
+  String descripcion;
   bool completada;
 
-  Tarea({required this.nombre, this.completada = false});
+  Tarea({required this.nombre, required this.descripcion, this.completada = false});
 }
