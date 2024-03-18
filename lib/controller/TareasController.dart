@@ -1,10 +1,26 @@
-import 'package:tarea2_movil/models/tareas.dart';
+import 'package:tarea2_movil/models/Tareas.dart';
 
 class TareasController {
-  List<Tarea> tareas = [];
+  List<Tarea> tareas = [
+    Tarea(
+      nombre: 'Comprar leche',
+      descripcion: 'Ir al supermercado y comprar leche',
+      completada: false,
+    ),
+    Tarea(
+      nombre: 'Hacer ejercicio',
+      descripcion: 'Ir al gimnasio y hacer ejercicio durante una hora',
+      completada: false,
+    ),
+    Tarea(
+      nombre: 'Estudiar para el examen',
+      descripcion: 'Repasar los apuntes y hacer ejercicios prácticos',
+      completada: false,
+    ),
+  ];
 
-  void agregarTarea(String nombre, String descripcion) {
-    tareas.add(Tarea(nombre: nombre, descripcion: descripcion));
+  void agregarTarea(Tarea) {
+    tareas.add(Tarea);
   }
 
   void marcarTareaComoCompletada(int index, bool completada) {
@@ -27,29 +43,11 @@ class TareasController {
     return tareas.length;
   }
 
-List<Tarea> getTareas() {
-  return [
-    Tarea(
-      nombre: 'Comprar leche',
-      descripcion: 'Ir al supermercado y comprar leche',
-      completada: false,
-    ),
-    Tarea(
-      nombre: 'Hacer ejercicio',
-      descripcion: 'Ir al gimnasio y hacer ejercicio durante una hora',
-      completada: false,
-    ),
-    Tarea(
-      nombre: 'Estudiar para el examen',
-      descripcion: 'Repasar los apuntes y hacer ejercicios prácticos',
-      completada: false,
-    ),
-  ];
-}
+  List<Tarea>  getTareas() {
+    return tareas;
+  }
 
   int getTareasCompletadas() {
     return tareas.where((tarea) => tarea.completada).length;
   }
 }
-
-

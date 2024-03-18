@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tarea2_movil/controller/TareasController.dart';
-
-
+import 'package:tarea2_movil/models/Tareas.dart';
 
 class AgregarTareaPage extends StatelessWidget {
-  final TareasController _tareasController = TareasController(); 
+  final TareasController _tareasController = TareasController();
+  final Function(Tarea) onTareaAdded;
+
+  AgregarTareaPage({required this.onTareaAdded});
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +40,15 @@ class AgregarTareaPage extends StatelessWidget {
               onPressed: () {
                 String titulo = tituloController.text;
                 String descripcion = descripcionController.text;
-                _tareasController.agregarTarea(titulo, descripcion);
-                Navigator.pop(context); 
+                Tarea nuevaTarea = Tarea(
+                  nombre: titulo,
+                  descripcion: descripcion,
+                  completada: false,
+                );
+                _tareasController.agregarTarea(nuevaTarea);
+                // Llama al callback con la nueva tarea
+                onTareaAdded(nuevaTarea);
+                Navigator.pop(context);
               },
               child: Text('Guardar'),
             ),

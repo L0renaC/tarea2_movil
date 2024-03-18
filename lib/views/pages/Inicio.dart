@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:tarea2_movil/controller/TareasController.dart';
+import 'package:tarea2_movil/models/Tareas.dart';
+import 'package:tarea2_movil/views/pages/AgregarTarea.dart';
 
-import 'package:tarea2_movil/models/tareas.dart';
-import 'package:tarea2_movil/views/pages/AgregarTarea.dart'; 
+class Inicio extends StatefulWidget {
+  @override
+  _InicioState createState() => _InicioState();
+}
 
-class Inicio extends StatelessWidget {
-  final TareasController _tareasController = TareasController(); 
+class _InicioState extends State<Inicio> {
+  final TareasController _tareasController = TareasController();
+  List<Tarea> tareas = [];
+
+  @override
+  void initState() {
+    super.initState();
+    tareas = _tareasController.getTareas();
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<Tarea> tareas = _tareasController.getTareas(); 
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Lista de Tareas'),
@@ -24,23 +33,37 @@ class Inicio extends StatelessWidget {
             leading: Checkbox(
               value: tareas[index].completada,
               onChanged: (value) {
-                _tareasController.marcarTareaComoCompletada(index, value ?? false);
+                setState(() {
+                  _tareasController.marcarTareaComoCompletada(index, value ?? false);
+                });
               },
             ),
             trailing: IconButton(
               icon: Icon(Icons.delete),
               onPressed: () {
-                _tareasController.eliminarTarea(index);
+                setState(() {
+                  _tareasController.eliminarTarea(index);
+                  tareas = _tareasController.getTareas();
+                });
               },
             ),
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          final result = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AgregarTareaPage()),
+            MaterialPageRoute(
+              builder: (context) => AgregarTareaPage(
+                
+                onTareaAdded: (newTarea) {
+                  setState(() {
+                    tareas.add(newTarea);
+                  });
+                },
+              ),
+            ),
           );
         },
         child: Icon(Icons.add),
