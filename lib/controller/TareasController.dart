@@ -3,17 +3,17 @@ import 'package:tarea2_movil/models/Tareas.dart';
 class TareasController {
   List<Tarea> tareas = [
     Tarea(
-      nombre: 'Comprar leche',
+      nombre: "Comprar leche",
       descripcion: 'Ir al supermercado y comprar leche',
       completada: false,
     ),
     Tarea(
-      nombre: 'Hacer ejercicio',
+      nombre: "Hacer ejercicio",
       descripcion: 'Ir al gimnasio y hacer ejercicio durante una hora',
       completada: false,
     ),
     Tarea(
-      nombre: 'Estudiar para el examen',
+      nombre: "Estudiar para el examen",
       descripcion: 'Repasar los apuntes y hacer ejercicios prácticos',
       completada: false,
     ),
@@ -23,9 +23,17 @@ class TareasController {
     tareas.add(Tarea);
   }
 
-  void marcarTareaComoCompletada(int index, bool completada) {
+void marcarTareaComoCompletada(int index, bool? completada) {
+  if (index >= 0 && index < tareas.length) {
+    tareas[index].completada = completada ?? false;
+  } else {
+    throw Exception('Índice fuera de los límites de la lista de tareas');
+  }
+}
+
+    void editarTarea(int index, Tarea tareaEditada) {
     if (index >= 0 && index < tareas.length) {
-      tareas[index].completada = completada;
+      tareas[index] = tareaEditada;
     } else {
       throw Exception('Índice fuera de los límites de la lista de tareas');
     }

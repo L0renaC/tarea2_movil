@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tarea2_movil/controller/TareasController.dart';
 import 'package:tarea2_movil/models/Tareas.dart';
 import 'package:tarea2_movil/views/pages/AgregarTarea.dart';
+import 'package:tarea2_movil/views/pages/EditarTarea.dart';
+import 'package:tarea2_movil/views/widgets/TareaTitulo.dart';
 
 class Inicio extends StatefulWidget {
   @override
@@ -22,31 +24,44 @@ class _InicioState extends State<Inicio> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de Tareas'),
+        centerTitle: true,
+        title: Text(
+          'Tareas pendientes',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: ListView.builder(
         itemCount: tareas.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(tareas[index].nombre),
-            subtitle: Text(tareas[index].descripcion),
-            leading: Checkbox(
-              value: tareas[index].completada,
-              onChanged: (value) {
+          return TareaTile(
+            tarea: tareas[index],
+            onToggle: (value) {
+              setState(() {
+                _tareasController.marcarTareaComoCompletada(index, value);
+              });
+            },
+            onDelete: () {
+              setState(() {
+                _tareasController.eliminarTarea(index);
+                tareas = _tareasController.getTareas();
+              });
+            },
+            onEdit: (editedTarea) async {
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditarTareaPage(tarea: editedTarea),
+                ),
+              );
+              if (result != null) {
+                _tareasController.editarTarea(index,result);
                 setState(() {
-                  _tareasController.marcarTareaComoCompletada(index, value ?? false);
-                });
-              },
-            ),
-            trailing: IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () {
-                setState(() {
-                  _tareasController.eliminarTarea(index);
                   tareas = _tareasController.getTareas();
                 });
-              },
-            ),
+              }
+            },
           );
         },
       ),
@@ -56,7 +71,6 @@ class _InicioState extends State<Inicio> {
             context,
             MaterialPageRoute(
               builder: (context) => AgregarTareaPage(
-                
                 onTareaAdded: (newTarea) {
                   setState(() {
                     tareas.add(newTarea);
