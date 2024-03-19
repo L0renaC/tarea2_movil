@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:tarea2_movil/models/Tareas.dart';
 
@@ -43,14 +44,14 @@ class _EditarTareaPageState extends State<EditarTareaPage> {
             TextFormField(
               controller: nombreController,
               decoration: InputDecoration(
-                labelText: 'Nombre de la tarea',
+                labelText: "Nombre de la tarea",
               ),
             ),
             SizedBox(height: 20),
             TextFormField(
               controller: descripcionController,
               decoration: InputDecoration(
-                labelText: 'Descripción de la tarea',
+                labelText: "Descripción de la tarea",
               ),
             ),
             SizedBox(height: 20),
@@ -58,12 +59,37 @@ class _EditarTareaPageState extends State<EditarTareaPage> {
               onPressed: () {
                 String nuevoNombre = nombreController.text;
                 String nuevaDescripcion = descripcionController.text;
-                Tarea tareaEditada = Tarea(
+                if(!nuevoNombre.isEmpty && !nuevaDescripcion.isEmpty){
+                  Tarea tareaEditada = Tarea(
                   nombre: nuevoNombre,
                   descripcion: nuevaDescripcion,
                   completada: widget.tarea.completada, 
                 );
                 Navigator.pop(context, tareaEditada);
+                }else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        children: [
+                          Icon(
+                            Icons.warning,
+                            color: Colors.white,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            "Llene todos los campos.",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                      backgroundColor: const Color.fromARGB(255, 255, 47, 33),
+                    ),
+                  );
+                }  
               },
               child: Text('Guardar'),
             ),

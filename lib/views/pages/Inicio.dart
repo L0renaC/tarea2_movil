@@ -22,29 +22,46 @@ class _InicioState extends State<Inicio> {
 
   @override
   Widget build(BuildContext context) {
+    List<Tarea> tareasPendientes = [];
+    List<Tarea> tareasCompletadas = [];
+
+    for (Tarea tarea in tareas) {
+      if (tarea.completada) {
+        tareasCompletadas.add(tarea);
+      } else {
+        tareasPendientes.add(tarea);
+      }
+    }
+    List<Tarea> tareasOrdenadas = [];
+    tareasOrdenadas.addAll(tareasPendientes);
+    tareasOrdenadas.addAll(tareasCompletadas);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Tareas pendientes',
+          "Tus tareas",
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
       ),
       body: ListView.builder(
-        itemCount: tareas.length,
+        itemCount: tareasOrdenadas.length,
         itemBuilder: (context, index) {
           return TareaTile(
-            tarea: tareas[index],
+            tarea: tareasOrdenadas[index],
             onToggle: (value) {
               setState(() {
-                _tareasController.marcarTareaComoCompletada(index, value);
+                int tareaIndex = tareas.indexOf(tareasOrdenadas[index]);
+                _tareasController.marcarTareaComoCompletada(tareaIndex, value);
+                tareas = _tareasController.getTareas();
               });
             },
             onDelete: () {
               setState(() {
-                _tareasController.eliminarTarea(index);
+                int tareaIndex = tareas.indexOf(tareasOrdenadas[index]);
+                _tareasController.eliminarTarea(tareaIndex);
                 tareas = _tareasController.getTareas();
               });
             },
@@ -56,7 +73,8 @@ class _InicioState extends State<Inicio> {
                 ),
               );
               if (result != null) {
-                _tareasController.editarTarea(index,result);
+                int tareaIndex = tareas.indexOf(tareasOrdenadas[index]);
+                _tareasController.editarTarea(tareaIndex, result);
                 setState(() {
                   tareas = _tareasController.getTareas();
                 });
