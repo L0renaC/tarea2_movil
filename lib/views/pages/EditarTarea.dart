@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:tarea2_movil/models/Tareas.dart';
+import 'package:tarea2_movil/views/widgets/TareasSnackBar.dart';
 
 class EditarTareaPage extends StatefulWidget {
   final Tarea tarea;
@@ -55,44 +56,23 @@ class _EditarTareaPageState extends State<EditarTareaPage> {
               ),
             ),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                String nuevoNombre = nombreController.text;
-                String nuevaDescripcion = descripcionController.text;
-                if(!nuevoNombre.isEmpty && !nuevaDescripcion.isEmpty){
-                  Tarea tareaEditada = Tarea(
+           ElevatedButton(
+            onPressed: () {
+              String nuevoNombre = nombreController.text;
+              String nuevaDescripcion = descripcionController.text;
+              if (!nuevoNombre.isEmpty && !nuevaDescripcion.isEmpty) {
+                Tarea tareaEditada = Tarea(
                   nombre: nuevoNombre,
                   descripcion: nuevaDescripcion,
-                  completada: widget.tarea.completada, 
+                  completada: widget.tarea.completada,
                 );
                 Navigator.pop(context, tareaEditada);
-                }else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Row(
-                        children: [
-                          Icon(
-                            Icons.warning,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            "Llene todos los campos.",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                      backgroundColor: const Color.fromARGB(255, 255, 47, 33),
-                    ),
-                  );
-                }  
-              },
-              child: Text('Guardar'),
-            ),
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(mostrarSnackBar(context));
+              }
+            },
+            child: Text('Guardar'),
+          ),
           ],
         ),
       ),

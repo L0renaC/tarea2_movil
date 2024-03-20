@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tarea2_movil/models/Tareas.dart';
 import 'package:tarea2_movil/views/widgets/TareaDescripcion.dart';
+import 'package:tarea2_movil/views/widgets/TareasIconos.dart';
 class TareaTile extends StatelessWidget {
   final Tarea tarea;
   final void Function(bool?) onToggle;
@@ -10,7 +11,7 @@ class TareaTile extends StatelessWidget {
   TareaTile({required this.tarea, required this.onToggle, required this.onDelete, required this.onEdit});
 
   @override
-  Widget build(BuildContext context) {
+   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(11),
       child: Row(
@@ -38,17 +39,9 @@ class TareaTile extends StatelessWidget {
               ),
             ),
           ),
-          Row(
-            children: [
-              IconButton(
-                icon: Icon(Icons.edit, color: Colors.deepPurple),
-                onPressed: () => onEdit(tarea),
-              ),
-              IconButton(
-                icon: Icon(Icons.delete, color: Colors.deepPurple),
-                onPressed: onDelete,
-              ),
-            ],
+          IconosEdicion(
+            onEditar: () => onEdit(tarea),
+            onEliminar: onDelete,
           ),
         ],
       ),
