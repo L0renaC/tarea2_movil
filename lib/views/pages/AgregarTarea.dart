@@ -56,6 +56,12 @@ class AgregarTareaPage extends StatelessWidget {
                     completada: false,
                   );
                   _tareasController.agregarTarea(nuevaTarea);
+                  Map<String,dynamic>tareaMapa = {
+                    'titulo':nuevaTarea.nombre,
+                    'descripcion':nuevaTarea.descripcion,
+                    'estado':nuevaTarea.completada,
+                  };
+                  _tareasController.addarea(tareaMapa);
                   onTareaAdded(nuevaTarea);
                   Navigator.pop(context);
                 } else {

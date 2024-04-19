@@ -1,4 +1,4 @@
-package com.example.tarea2_movil
+package com.tareamovil2.tareamovil
 
 import io.flutter.embedding.android.FlutterActivity
 
